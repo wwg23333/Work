@@ -1,8 +1,9 @@
 package com.gy.jcartadministration.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class OrderHistory {
+public class OrderHistory implements Serializable {
     private Long orderHistoryId;
 
     private Integer orderId;

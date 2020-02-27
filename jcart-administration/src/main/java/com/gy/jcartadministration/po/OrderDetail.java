@@ -1,6 +1,8 @@
 package com.gy.jcartadministration.po;
 
-public class OrderDetail {
+import java.io.Serializable;
+
+public class OrderDetail implements Serializable {
     private Long orderId;
 
     private Short shipMethod;

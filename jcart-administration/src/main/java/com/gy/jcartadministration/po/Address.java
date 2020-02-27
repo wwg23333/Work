@@ -1,6 +1,8 @@
 package com.gy.jcartadministration.po;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
     private Integer addressId;
 
     private Integer customerId;

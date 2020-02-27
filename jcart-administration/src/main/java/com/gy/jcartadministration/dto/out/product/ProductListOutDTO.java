@@ -1,14 +1,16 @@
 package com.gy.jcartadministration.dto.out.product;
 
-public class ProductListOutDTO {
+import java.io.Serializable;
+
+public class ProductListOutDTO implements Serializable {
     private Integer productId;
     private String productName;
     private String productCode;
     private Double price;
     private Double discount;
-    private Integer quantity;
+    private Integer stockQuantity;
     private Byte status;
-    private String mainPicurl;
+    private String mainPicUrl;
 
     public Integer getProductId() {
         return productId;
@@ -50,12 +52,16 @@ public class ProductListOutDTO {
         this.discount = discount;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public Integer getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(Integer stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
 
     public Byte getStatus() {
@@ -66,11 +72,11 @@ public class ProductListOutDTO {
         this.status = status;
     }
 
-    public String getMainPicurl() {
-        return mainPicurl;
+    public String getMainPicUrl() {
+        return mainPicUrl;
     }
 
-    public void setMainPicurl(String mainPicurl) {
-        this.mainPicurl = mainPicurl;
+    public void setMainPicUrl(String mainPicUrl) {
+        this.mainPicUrl = mainPicUrl;
     }
 }

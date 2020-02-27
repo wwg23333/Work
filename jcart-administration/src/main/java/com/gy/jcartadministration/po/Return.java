@@ -1,8 +1,9 @@
 package com.gy.jcartadministration.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Return {
+public class Return implements Serializable {
     private Integer returnId;
 
     private Long orderId;

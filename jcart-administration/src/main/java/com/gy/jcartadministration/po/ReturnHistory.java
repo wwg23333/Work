@@ -1,8 +1,9 @@
 package com.gy.jcartadministration.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ReturnHistory {
+public class ReturnHistory implements Serializable {
     private Long returnHistoryId;
 
     private Integer returnId;

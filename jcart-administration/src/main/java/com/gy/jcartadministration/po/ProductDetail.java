@@ -1,6 +1,8 @@
 package com.gy.jcartadministration.po;
 
-public class ProductDetail {
+import java.io.Serializable;
+
+public class ProductDetail implements Serializable {
     private Integer productId;
 
     private String otherPicUrls;
