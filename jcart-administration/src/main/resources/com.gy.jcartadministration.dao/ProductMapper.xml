@@ -177,9 +177,10 @@
   </delete>
 
   <select id="search" resultMap="ProductListOutDTO">
-    select *
+   <!-- select *
     <include refid="Base_Column_List" />
-    from jcart_product
+    from jcart_product-->
+   select * from jcart_product
   </select>
 
 </mapper>

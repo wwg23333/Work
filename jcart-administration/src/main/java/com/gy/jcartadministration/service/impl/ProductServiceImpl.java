@@ -43,7 +43,7 @@ public class ProductServiceImpl implements ProductService {
         product.setSortOrder(productCreateInDTO.getSortOrder());
         String description = productCreateInDTO.getDescription();
         String productAbstract = description.substring(0, Math.min(100, description.length()));
-        product.setProductAbstract(productAbstract);
+        product.setProductAbstract(productCreateInDTO.getProductAbstract());
         productMapper.insertSelective(product);
 
         Integer productId = product.getProductId();
@@ -74,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
         product.setSortOrder(productUpdateInDTO.getSortOrder());
         String description = productUpdateInDTO.getDescription();
         String productAbstract = description.substring(0, Math.min(100, description.length()));
-        product.setProductAbstract(productAbstract);
+        product.setProductAbstract(productUpdateInDTO.getProductAbstract());
         productMapper.updateByPrimaryKeySelective(product);
 
         ProductDetail productDetail = new ProductDetail();
@@ -123,6 +123,7 @@ public class ProductServiceImpl implements ProductService {
         productShowOutDTO.setRewordPoints(product.getRewordPoints());
         productShowOutDTO.setSortOrder(product.getSortOrder());
         productShowOutDTO.setStockQuantity(product.getStockQuantity());
+        productShowOutDTO.setProductAbstract(product.getProductAbstract());
 
         productShowOutDTO.setDescription(productDetail.getDescription());
         String otherPicUrlsJson = productDetail.getOtherPicUrls();

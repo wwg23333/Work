@@ -9,6 +9,7 @@ var app = new Vue({
         stockQuantity: '',
         rewordPoints: '',
         sortOrder: '',
+        productAbstract: '',
         description: '',
         selectedStatus: 1,
         selectedMainPic: '',
@@ -26,6 +27,10 @@ var app = new Vue({
     mounted() {
         console.log('view mounted');
 
+        tinymce.init({
+            selector: '#mytextarea'
+        });
+
         var url = new URL(location.href);
         this.productId = url.searchParams.get("productId");
         if (!this.productId) {
@@ -38,6 +43,7 @@ var app = new Vue({
     methods: {
         handleUpdateClick() {
             console.log('update click');
+            this.description = tinyMCE.activeEditor.getContent();
             this.updateProduct();
         },
         handleOnMainChange(val) {
@@ -112,6 +118,7 @@ var app = new Vue({
                 mainPicUrl: this.mainPicUrl,
                 rewordPoints: this.rewordPoints,
                 sortOrder: this.sortOrder,
+                productAbstract: this.productAbstract,
                 description: this.description,
                 otherPicUrls: this.otherPicUrls
             })
@@ -142,6 +149,7 @@ var app = new Vue({
                     app.rewordPoints = product.rewordPoints;
                     app.sortOrder = product.sortOrder;
                     app.mainPicUrl = product.mainPicUrl;
+                    app.productAbstract = product.productAbstract;
                     app.description = product.description;
                     app.otherPicUrls = product.otherPicUrls;
                 })
