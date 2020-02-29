@@ -5,6 +5,7 @@ import com.gy.jcartadministration.dto.out.AdminGetProfileOutDTO;
 import com.gy.jcartadministration.dto.out.AdminListOutDTO;
 import com.gy.jcartadministration.dto.out.AdminShowOutDTO;
 import com.gy.jcartadministration.dto.out.PageOutDTO;
+import com.gy.jcartadministration.exception.ClientException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,7 +14,7 @@ public class AdminController {
 
     //管理员登录页面
     @GetMapping("/login")
-    public String login(AdminLoginDTO adminLoginDTO){
+    public String login(AdminLoginDTO adminLoginDTO)throws ClientException {
         return null;
     }
 
