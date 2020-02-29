@@ -1,21 +1,44 @@
 package com.gy.jcartadministration.controller;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.gy.jcartadministration.constant.ClientExceptionConstant;
 import com.gy.jcartadministration.dto.in.*;
-import com.gy.jcartadministration.dto.out.AdminGetProfileOutDTO;
-import com.gy.jcartadministration.dto.out.AdminListOutDTO;
-import com.gy.jcartadministration.dto.out.AdminShowOutDTO;
-import com.gy.jcartadministration.dto.out.PageOutDTO;
+import com.gy.jcartadministration.dto.out.*;
 import com.gy.jcartadministration.exception.ClientException;
+import com.gy.jcartadministration.po.Administrator;
+import com.gy.jcartadministration.service.AdminService;
+import com.gy.jcartadministration.util.JWTUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/interview")
 public class AdminController {
 
+    @Autowired
+    private AdminService adminService;
+
+    @Autowired
+    private JWTUtil jwtUtil;
+
     //管理员登录页面
     @GetMapping("/login")
-    public String login(AdminLoginDTO adminLoginDTO)throws ClientException {
-        return null;
+    public AdministratorLoginOutDTO login(AdminLoginDTO adminLoginDTO)throws ClientException {
+
+        Administrator administrator = adminService.getByUsername(adminLoginDTO.getUsername());
+        if (administrator == null){
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_USERNAME_NOT_EXIST_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_USERNAME_NOT_EXIST_ERRMSG);
+        }
+        String encPwdDB = administrator.getEncryptedPassword();
+        BCrypt.Result result = BCrypt.verifyer().verify(adminLoginDTO.getPassword().toCharArray(), encPwdDB);
+
+        if (result.verified) {
+            AdministratorLoginOutDTO adminLoginOutDTO = jwtUtil.issueToken(administrator);
+
+            return adminLoginOutDTO;
+        }else {
+            throw new ClientException(ClientExceptionConstant.ADNINISTRATOR_PASSWORD_INVALID_ERRCODE, ClientExceptionConstant.ADNINISTRATOR_PASSWORD_INVALID_ERRMSG);
+        }
     }
 
     //获取管理员编辑页信息
