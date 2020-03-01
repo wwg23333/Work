@@ -1,19 +1,12 @@
 package com.gy.jcartadministration.dto.out;
 
 public class AdminGetProfileOutDTO {
-    private Integer administrator_id;
+    private Integer administratorId;
     private String username;
     private String email;
     private String realName;
-    private Byte status;
-
-    public Integer getAdministrator_id() {
-        return administrator_id;
-    }
-
-    public void setAdministrator_id(Integer administrator_id) {
-        this.administrator_id = administrator_id;
-    }
+    private String avatarUrl;
+    private Long createTimestamp;
 
     public String getUsername() {
         return username;
@@ -39,11 +32,27 @@ public class AdminGetProfileOutDTO {
         this.realName = realName;
     }
 
-    public Byte getStatus() {
-        return status;
+    public Integer getAdministratorId() {
+        return administratorId;
     }
 
-    public void setStatus(Byte status) {
-        this.status = status;
+    public void setAdministratorId(Integer administratorId) {
+        this.administratorId = administratorId;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public Long getCreateTimestamp() {
+        return createTimestamp;
+    }
+
+    public void setCreateTimestamp(Long createTimestamp) {
+        this.createTimestamp = createTimestamp;
     }
 }

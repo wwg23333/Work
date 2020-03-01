@@ -43,8 +43,17 @@ public class AdminController {
 
     //获取管理员编辑页信息
     @GetMapping("/getProfile")
-    public AdminGetProfileOutDTO getProfile(@RequestParam(required = false) Integer administrator_id){
-        return null;
+    public AdminGetProfileOutDTO getProfile(@RequestParam(required = false) Integer administratorId){
+        Administrator administrator = adminService.getById(administratorId);
+        AdminGetProfileOutDTO adminGetProfileOutDTO = new AdminGetProfileOutDTO();
+        adminGetProfileOutDTO.setAdministratorId(administrator.getAdministratorId());
+        adminGetProfileOutDTO.setUsername(administrator.getUsername());
+        adminGetProfileOutDTO.setRealName(administrator.getRealName());
+        adminGetProfileOutDTO.setEmail(administrator.getEmail());
+        adminGetProfileOutDTO.setAvatarUrl(administrator.getAvatarUrl());
+        adminGetProfileOutDTO.setCreateTimestamp(administrator.getCreateTime().getTime());
+
+        return adminGetProfileOutDTO;
     }
     //编辑管理员页面
     @PostMapping("/updateProdfile")
