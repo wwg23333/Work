@@ -43,7 +43,7 @@ public class AdminController {
 
     //获取管理员编辑页信息
     @GetMapping("/getProfile")
-    public AdminGetProfileOutDTO getProfile(@RequestParam(required = false) Integer administratorId){
+    public AdminGetProfileOutDTO getProfile(@RequestAttribute Integer administratorId){
         Administrator administrator = adminService.getById(administratorId);
         AdminGetProfileOutDTO adminGetProfileOutDTO = new AdminGetProfileOutDTO();
         adminGetProfileOutDTO.setAdministratorId(administrator.getAdministratorId());
@@ -57,8 +57,14 @@ public class AdminController {
     }
     //编辑管理员页面
     @PostMapping("/updateProdfile")
-    public void updatePro(@RequestBody AdminUpdateProfileDTO adminUpdateProfileDTO){
-
+    public void updatePro(@RequestBody AdminUpdateProfileDTO adminUpdateProfileDTO,
+                          @RequestAttribute Integer administratorId){
+        Administrator administrator = new Administrator();
+        administrator.setAdministratorId(administratorId);
+        administrator.setRealName(adminUpdateProfileDTO.getRealName());
+        administrator.setEmail(adminUpdateProfileDTO.getEmail());
+        administrator.setAvatarUrl(adminUpdateProfileDTO.getAvatarUrl());
+        adminService.update(administrator);
     }
     //传入重置的密码
     @GetMapping("/getPwdRestCode")
