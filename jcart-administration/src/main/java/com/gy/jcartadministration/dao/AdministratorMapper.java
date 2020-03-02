@@ -9,7 +9,7 @@ public interface AdministratorMapper {
 
     int insert(Administrator record);
 
-    int insertSelective(Administrator record);
+    int insertSelective(Administrator administrator);
 
     Administrator selectByPrimaryKey(Integer administratorId);
 

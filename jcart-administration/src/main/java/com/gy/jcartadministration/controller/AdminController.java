@@ -5,6 +5,7 @@ import com.github.pagehelper.Page;
 import com.gy.jcartadministration.constant.ClientExceptionConstant;
 import com.gy.jcartadministration.dto.in.*;
 import com.gy.jcartadministration.dto.out.*;
+import com.gy.jcartadministration.enumeration.AdministratorStatus;
 import com.gy.jcartadministration.exception.ClientException;
 import com.gy.jcartadministration.po.Administrator;
 import com.gy.jcartadministration.service.AdminService;
@@ -12,6 +13,7 @@ import com.gy.jcartadministration.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -120,7 +122,20 @@ public class AdminController {
 
     @PostMapping("/create")
     public Integer create(@RequestBody AdminCreateInDTO adminCreateInDTO){
-        return null;
+        Administrator administrator = new Administrator();
+        administrator.setUsername(adminCreateInDTO.getUsername());
+        administrator.setRealName(adminCreateInDTO.getRealName());
+        administrator.setEmail(adminCreateInDTO.getEmail());
+        administrator.setAvatarUrl(adminCreateInDTO.getAvatarUrl());
+        administrator.setStatus((byte) AdministratorStatus.Enable.ordinal());
+        administrator.setCreateTime(new Date());
+
+        String bcryptHashString = BCrypt.withDefaults().hashToString(12, adminCreateInDTO.getPassword().toCharArray());
+        administrator.setEncryptedPassword(bcryptHashString);
+
+        Integer administratorId = adminService.create(administrator);
+
+        return administratorId;
     }
 
     @PostMapping("/update")

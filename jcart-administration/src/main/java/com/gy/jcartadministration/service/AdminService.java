@@ -12,4 +12,6 @@ public interface AdminService {
     void update(Administrator administrator);
 
     Page<Administrator> getList(Integer pageNum);
+
+    Integer create(Administrator administrator);
 }

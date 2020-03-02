@@ -37,4 +37,11 @@ public class AdministratorServiceImpl implements AdminService {
         Page<Administrator> page = administratorMapper.selectList();
         return page;
     }
+
+    @Override
+    public Integer create(Administrator administrator) {
+        administratorMapper.insertSelective(administrator);
+        Integer administratorId = administrator.getAdministratorId();
+        return administratorId;
+    }
 }
