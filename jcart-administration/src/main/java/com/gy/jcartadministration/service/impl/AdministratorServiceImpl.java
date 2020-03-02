@@ -1,5 +1,7 @@
 package com.gy.jcartadministration.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.gy.jcartadministration.dao.AdministratorMapper;
 import com.gy.jcartadministration.po.Administrator;
 import com.gy.jcartadministration.service.AdminService;
@@ -23,4 +25,17 @@ public class AdministratorServiceImpl implements AdminService {
         Administrator administrator = administratorMapper.selectByUsername(username);
         return administrator;
     }
+
+    @Override
+    public void update(Administrator administrator) {
+        administratorMapper.updateByPrimaryKeySelective(administrator);
+    }
+
+    @Override
+    public Page<Administrator> getList(Integer pageNum) {
+        PageHelper.startPage(pageNum, 10);
+        Page<Administrator> page = administratorMapper.selectList();
+        return page;
+    }
+
 }

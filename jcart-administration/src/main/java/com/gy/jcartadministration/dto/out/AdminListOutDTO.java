@@ -1,17 +1,17 @@
 package com.gy.jcartadministration.dto.out;
 
 public class AdminListOutDTO {
-    private Integer administrator_id;
+    private Integer administratorId;
     private String username;
     private Byte status;
-    private Long createtime;
+    private Long createTimestamp;
 
-    public Integer getAdministrator_id() {
-        return administrator_id;
+    public Integer getAdministratorId() {
+        return administratorId;
     }
 
-    public void setAdministrator_id(Integer administrator_id) {
-        this.administrator_id = administrator_id;
+    public void setAdministratorId(Integer administratorId) {
+        this.administratorId = administratorId;
     }
 
     public String getUsername() {
@@ -30,11 +30,12 @@ public class AdminListOutDTO {
         this.status = status;
     }
 
-    public Long getCreatetime() {
-        return createtime;
+    public Long getCreateTimestamp() {
+        return createTimestamp;
     }
 
-    public void setCreatetime(Long createtime) {
-        this.createtime = createtime;
+    public void setCreateTimestamp(Long createTimestamp) {
+        this.createTimestamp = createTimestamp;
     }
+
 }

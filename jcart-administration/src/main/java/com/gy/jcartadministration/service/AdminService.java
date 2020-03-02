@@ -1,5 +1,6 @@
 package com.gy.jcartadministration.service;
 
+import com.github.pagehelper.Page;
 import com.gy.jcartadministration.po.Administrator;
 
 public interface AdminService {
@@ -10,4 +11,5 @@ public interface AdminService {
 
     void update(Administrator administrator);
 
+    Page<Administrator> getList(Integer pageNum);
 }

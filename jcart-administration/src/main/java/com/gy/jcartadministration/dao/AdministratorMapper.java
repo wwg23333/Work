@@ -1,5 +1,6 @@
 package com.gy.jcartadministration.dao;
 
+import com.github.pagehelper.Page;
 import com.gy.jcartadministration.po.Administrator;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,4 +18,6 @@ public interface AdministratorMapper {
     int updateByPrimaryKey(Administrator record);
 
     Administrator selectByUsername(@Param("username") String username);
+
+    Page<Administrator> selectList();
 }

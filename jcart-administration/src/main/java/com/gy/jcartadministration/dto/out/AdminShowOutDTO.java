@@ -1,17 +1,19 @@
 package com.gy.jcartadministration.dto.out;
 
 public class AdminShowOutDTO {
-    private Integer administrator_id;
+    private Integer administratorId;
     private String username;
+    private String realName;
     private String email;
     private String avatarUrl;
+    private Byte status;
 
-    public Integer getAdministrator_id() {
-        return administrator_id;
+    public Integer getAdministratorId() {
+        return administratorId;
     }
 
-    public void setAdministrator_id(Integer administrator_id) {
-        this.administrator_id = administrator_id;
+    public void setAdministratorId(Integer administratorId) {
+        this.administratorId = administratorId;
     }
 
     public String getUsername() {
@@ -20,6 +22,14 @@ public class AdminShowOutDTO {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public String getEmail() {
@@ -36,5 +46,13 @@ public class AdminShowOutDTO {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 }
