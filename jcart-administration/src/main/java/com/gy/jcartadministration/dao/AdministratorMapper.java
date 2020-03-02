@@ -4,6 +4,8 @@ import com.github.pagehelper.Page;
 import com.gy.jcartadministration.po.Administrator;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface AdministratorMapper {
     int deleteByPrimaryKey(Integer administratorId);
 
@@ -20,4 +22,6 @@ public interface AdministratorMapper {
     Administrator selectByUsername(@Param("username") String username);
 
     Page<Administrator> selectList();
+
+    int batchDelete(@Param("administratorIds") List<Integer> administratorIds);
 }

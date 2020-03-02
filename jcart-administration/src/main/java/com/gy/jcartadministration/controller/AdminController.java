@@ -154,5 +154,13 @@ public class AdminController {
         adminService.update(administrator);
     }
 
+    @PostMapping("/delete")
+    public void delete(@RequestBody Integer adminstratorId){
+        adminService.delete(adminstratorId);
+    }
 
+    @PostMapping("/batchDelete")
+    public void batchDelete(@RequestBody List<Integer> administratorIds){
+        adminService.batchDelete(administratorIds);
+    }
 }
