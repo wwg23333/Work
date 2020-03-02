@@ -37,5 +37,4 @@ public class AdministratorServiceImpl implements AdminService {
         Page<Administrator> page = administratorMapper.selectList();
         return page;
     }
-
 }

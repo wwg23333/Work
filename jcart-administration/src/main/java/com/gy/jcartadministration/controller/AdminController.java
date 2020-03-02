@@ -105,8 +105,17 @@ public class AdminController {
     }
 
     @GetMapping("/getById")
-    public AdminShowOutDTO getBYId(@RequestParam Integer administrator_id){
-        return null;
+    public AdminShowOutDTO getBYId(@RequestParam Integer administratorId){
+        Administrator administrator = adminService.getById(administratorId);
+
+        AdminShowOutDTO adminShowOutDTO = new AdminShowOutDTO();
+        adminShowOutDTO.setAdministratorId(administrator.getAdministratorId());
+        adminShowOutDTO.setUsername(administrator.getUsername());
+        adminShowOutDTO.setRealName(administrator.getRealName());
+        adminShowOutDTO.setEmail(administrator.getEmail());
+        adminShowOutDTO.setAvatarUrl(administrator.getAvatarUrl());
+        adminShowOutDTO.setStatus(administrator.getStatus());
+        return adminShowOutDTO;
     }
 
     @PostMapping("/create")
@@ -116,6 +125,17 @@ public class AdminController {
 
     @PostMapping("/update")
     public void update(@RequestBody AdminUpdateInDTO adminUpdateInDTO){
-
+        Administrator administrator = new Administrator();
+        administrator.setAdministratorId(adminUpdateInDTO.getAdministratorId());
+        administrator.setRealName(adminUpdateInDTO.getRealName());
+        administrator.setEmail(adminUpdateInDTO.getEmail());
+        administrator.setAvatarUrl(adminUpdateInDTO.getAvatarUrl());
+        administrator.setStatus(adminUpdateInDTO.getStatus());
+        String password = adminUpdateInDTO.getPassword();
+        if (password != null && !password.isEmpty()){
+            String bcryptHashString = BCrypt.withDefaults().hashToString(12, password.toCharArray());
+            administrator.setEncryptedPassword(bcryptHashString);
+        }
+        adminService.update(administrator);
     }
 }
