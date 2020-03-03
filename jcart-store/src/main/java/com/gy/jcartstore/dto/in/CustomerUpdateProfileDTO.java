@@ -3,9 +3,18 @@ package com.gy.jcartstore.dto.in;
 public class CustomerUpdateProfileDTO {
     private String realName;
     private String email;
+    private String mobile;
     private String encrypted_password;
     private String avatarUrl;
     private Byte status;
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
     public String getRealName() {
         return realName;
