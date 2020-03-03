@@ -1,6 +1,9 @@
 package com.gy.jcartstore.controller;
 
+import com.gy.jcartstore.dto.in.AddressCreateInDTO;
+import com.gy.jcartstore.dto.in.AddressUpdateInDTO;
 import com.gy.jcartstore.dto.out.AddressListOutDTO;
+import com.gy.jcartstore.dto.out.AddressShowOutDTO;
 import com.gy.jcartstore.po.Address;
 import com.gy.jcartstore.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +34,49 @@ public class AddressController {
         }).collect(Collectors.toList());
 
         return addressListOutDTOS;
+    }
+
+    @GetMapping("/getById")
+    public AddressShowOutDTO getById(@RequestParam Integer addressId){
+        Address address = addressService.getById(addressId);
+        AddressShowOutDTO addressShowOutDTO = new AddressShowOutDTO();
+        addressShowOutDTO.setAddressId(address.getAddressId());
+        addressShowOutDTO.setTag(address.getTag());
+        addressShowOutDTO.setReceiverName(address.getReceiverName());
+        addressShowOutDTO.setReceiverMobile(address.getReceiverMobile());
+        addressShowOutDTO.setContent(address.getContent());
+
+        return addressShowOutDTO;
+    }
+
+    @PostMapping("/create")
+    public Integer create(@RequestBody AddressCreateInDTO addressCreateInDTO,
+                          @RequestAttribute Integer customerId){
+        Address address = new Address();
+        address.setCustomerId(customerId);
+        address.setTag(addressCreateInDTO.getTag());
+        address.setReceiverName(addressCreateInDTO.getReceiverName());
+        address.setReceiverMobile(addressCreateInDTO.getReceiverMobile());
+        address.setContent(addressCreateInDTO.getContent());
+
+        addressService.create(address);
+        Integer addressId = address.getAddressId();
+        return addressId;
+    }
+
+    @PostMapping("/update")
+    public void update(@RequestBody AddressUpdateInDTO addressUpdateInDTO){
+        Address address = new Address();
+        address.setAddressId(addressUpdateInDTO.getAddressId());
+        address.setTag(addressUpdateInDTO.getTag());
+        address.setReceiverName(addressUpdateInDTO.getReceiverName());
+        address.setReceiverMobile(addressUpdateInDTO.getReceiverMobile());
+        address.setContent(addressUpdateInDTO.getContent());
+        addressService.update(address);
+    }
+
+    @PostMapping("/delete")
+    public void delete(@RequestBody Integer addressId){
+        addressService.delete(addressId);
     }
 }

@@ -8,4 +8,12 @@ public interface AddressService {
 
     List<Address> getByCustomerId(Integer customerId);
 
+    Address getById(Integer addressId);
+
+    Integer create(Address address);
+
+    void update(Address address);
+
+    void delete(Integer addressId);
+
 }
