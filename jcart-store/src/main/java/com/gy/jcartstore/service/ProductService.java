@@ -7,6 +7,8 @@ import com.gy.jcartstore.dto.out.product.ProductShowOutDTO;
 
 public interface ProductService {
 
+    ProductShowOutDTO getById(Integer productId);
+
     Page<ProductListOutDTO> search(Integer pageNum);
 
 }
