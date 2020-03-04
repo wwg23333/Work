@@ -43,6 +43,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public Customer getByEmail(String email) {
+        Customer customer = customerMapper.selectByEmail(email);
+        return customer;
+    }
+
+    @Override
     public Customer getById(Integer customerId) {
         Customer customer = customerMapper.selectByPrimaryKey(customerId);
         return customer;

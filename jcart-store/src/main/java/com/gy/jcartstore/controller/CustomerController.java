@@ -8,7 +8,14 @@ import com.gy.jcartstore.exception.ClientException;
 import com.gy.jcartstore.po.Customer;
 import com.gy.jcartstore.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
+
+import javax.xml.bind.DatatypeConverter;
+import java.security.SecureRandom;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/customer")
@@ -16,6 +23,17 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private SecureRandom secureRandom;
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Value("${spring.mail.username}")
+    private String fromEmail;
+
+    private HashMap<String, String> emailPwdResetCodeMap = new HashMap();
 
     //用户注册页面
     @PostMapping("/register")
@@ -77,8 +95,20 @@ public class CustomerController {
     }
 
     @GetMapping("/getPwdRestCode")
-    public String getPwdRest(@RequestParam String email){
-        return null;
+    public void getPwdRest(@RequestParam String email) throws ClientException{
+        Customer customer = customerService.getByEmail(email);
+        if (customer == null){
+            throw new ClientException(ClientExceptionConstant.CUSTOMER_USERNAME_NOT_EXIST_ERRCODE, ClientExceptionConstant.CUSTOMER_USERNAME_NOT_EXIST_ERRMSG);
+        }
+        byte[] bytes = secureRandom.generateSeed(3);
+        String hex = DatatypeConverter.printHexBinary(bytes);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(fromEmail);
+        message.setTo(email);
+        message.setSubject("jcart重置密码");
+        message.setText(hex);
+        mailSender.send(message);
+        emailPwdResetCodeMap.put("PwdResetCode"+email, hex);
     }
 
     @GetMapping("/getById")

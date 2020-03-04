@@ -36,6 +36,17 @@ var app = new Vue({
     methods: {
         handleAddToCartClick() {
             console.log('add to cart click');
+
+            var myShoppingCartJson = localStorage['myShoppingCartJson'];
+            this.myShoppingCart = myShoppingCartJson ? JSON.parse(myShoppingCartJson) : [];
+
+            var cartProduct = this.myShoppingCart.find(p => p.productId === this.productId);
+            if (cartProduct) {
+                console.log('cart product exist');
+                var originQuantity = parseInt(cartProduct.quantity);
+                var addQuantity = parseInt(this.quantity);
+                cartProduct.quantity = originQuantity + addQuantity;
+            } else {
             var newProduct = {
                 productId: this.productId,
                 productCode: this.productCode,
@@ -45,12 +56,12 @@ var app = new Vue({
                 discount: this.discount,
                 quantity: this.quantity
             };
-            newProduct.totalPrice = this.price * this.quantity;
             this.myShoppingCart.push(newProduct);
+        }
+            
             localStorage['myShoppingCartJson'] = JSON.stringify(this.myShoppingCart);
             this.$message.success('添加购物车成功');
         },
-    methods: {
         getProductById() {
             axios.get('/product/getById', {
                 params: {
