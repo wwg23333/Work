@@ -8,6 +8,6 @@ public interface OrderService {
 
     Page<OrderListOutDTO> search(Integer pageNum);
 
-    OrderShowOutDTO getById(Integer orderId);
+    OrderShowOutDTO getById(Long orderId);
 
 }

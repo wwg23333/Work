@@ -1,9 +1,11 @@
 package com.gy.jcartadministration.dto.out.order;
 
+import com.gy.jcartadministration.vo.OrderProductVO;
+
 import java.util.List;
 
 public class OrderShowOutDTO {
-    private Integer orderId;
+    private Long orderId;
     private Integer customerId;
     private String customerName;
     private Byte status;
@@ -17,13 +19,23 @@ public class OrderShowOutDTO {
     private String invoiceAddress;
     private Double invoicePrice;
     private String comment;
-    private List<OrderProductShowOutDTO> orderProducts;
+    private Integer rewordPoints;
+    private Short shipMethod;
+    private List<OrderProductVO> orderProducts;
 
-    public Integer getOrderId() {
+    public Short getShipMethod() {
+        return shipMethod;
+    }
+
+    public void setShipMethod(Short shipMethod) {
+        this.shipMethod = shipMethod;
+    }
+
+    public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
@@ -131,11 +143,19 @@ public class OrderShowOutDTO {
         this.comment = comment;
     }
 
-    public List<OrderProductShowOutDTO> getOrderProducts() {
+    public Integer getRewordPoints() {
+        return rewordPoints;
+    }
+
+    public void setRewordPoints(Integer rewordPoints) {
+        this.rewordPoints = rewordPoints;
+    }
+
+    public List<OrderProductVO> getOrderProducts() {
         return orderProducts;
     }
 
-    public void setOrderProducts(List<OrderProductShowOutDTO> orderProducts) {
+    public void setOrderProducts(List<OrderProductVO> orderProducts) {
         this.orderProducts = orderProducts;
     }
 }
