@@ -33,7 +33,8 @@ public class OrderController {
 
     @GetMapping("/getById")
     public OrderShowOutDTO getById(@RequestParam Integer orderId) {
-        return null;
+        OrderShowOutDTO orderShowOutDTO = orderService.getById(orderId);
+        return orderShowOutDTO;
     }
 
     @GetMapping("/getInvoiceInfo")

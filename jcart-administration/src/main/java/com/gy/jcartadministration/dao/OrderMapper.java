@@ -9,7 +9,7 @@ public interface OrderMapper {
 
     int insert(Order record);
 
-    int insertSelective(Order record);
+    int insertSelective(Order orderId);
 
     Order selectByPrimaryKey(Long orderId);
 
