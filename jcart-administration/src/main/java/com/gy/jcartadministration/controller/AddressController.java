@@ -1,6 +1,7 @@
 package com.gy.jcartadministration.controller;
 
 import com.gy.jcartadministration.dto.out.Address.AddressListOutDTO;
+import com.gy.jcartadministration.dto.out.Address.AddressShowOutDTO;
 import com.gy.jcartadministration.po.Address;
 import com.gy.jcartadministration.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,18 @@ public class AddressController {
             return addressListOutDTO;
         }).collect(Collectors.toList());
         return addressListOutDTOS;
+    }
+
+    @GetMapping("/getById")
+    public AddressShowOutDTO getById(@RequestParam Integer addressId){
+        Address address = addressService.getById(addressId);
+        AddressShowOutDTO addressShowOutDTO = new AddressShowOutDTO();
+        addressShowOutDTO.setAddressId(address.getAddressId());
+        addressShowOutDTO.setReceiverName(address.getReceiverName());
+        addressShowOutDTO.setReceiverMobile(address.getReceiverMobile());
+        addressShowOutDTO.setContent(address.getContent());
+        addressShowOutDTO.setTag(address.getTag());
+        return addressShowOutDTO;
     }
 
 }
