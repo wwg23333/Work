@@ -35,17 +35,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerShowOutDTO getById(Integer customerId) {
+    public Customer getById(Integer customerId) {
         Customer customer = customerMapper.selectByPrimaryKey(customerId);
-        CustomerShowOutDTO customerShowOutDTO = new CustomerShowOutDTO();
-        customerShowOutDTO.setCreateTimestamp(customerShowOutDTO.getCreateTimestamp());
-        //customerOut.setDefaultAddress(customer.getDefaultAddressId());
-        customerShowOutDTO.setEmail(customer.getEmail());
-        customerShowOutDTO.setMobile(customer.getMobile());
-        customerShowOutDTO.setRealName(customer.getRealName());
-        customerShowOutDTO.setStatus(customer.getStatus());
-        customerShowOutDTO.setUsername(customer.getUsername());
-
-        return customerShowOutDTO;
+        return customer;
     }
 }

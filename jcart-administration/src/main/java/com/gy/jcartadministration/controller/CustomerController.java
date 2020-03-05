@@ -5,6 +5,7 @@ import com.gy.jcartadministration.dto.in.customer.CustomerSearchInDTO;
 import com.gy.jcartadministration.dto.out.PageOutDTO;
 import com.gy.jcartadministration.dto.out.customer.CustomerListOutDTO;
 import com.gy.jcartadministration.dto.out.customer.CustomerShowOutDTO;
+import com.gy.jcartadministration.po.Customer;
 import com.gy.jcartadministration.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,20 @@ public class CustomerController {
 
     @GetMapping("/getById")
     public CustomerShowOutDTO getById(@RequestParam Integer customerId) {
-        CustomerShowOutDTO customerShowOutDTO = customerService.getById(customerId);
+        Customer customer = customerService.getById(customerId);
+
+        CustomerShowOutDTO customerShowOutDTO = new CustomerShowOutDTO();
+        customerShowOutDTO.setCustomerId(customerId);
+        customerShowOutDTO.setUsername(customer.getUsername());
+        customerShowOutDTO.setRealName(customer.getRealName());
+        customerShowOutDTO.setMobile(customer.getMobile());
+        customerShowOutDTO.setEmail(customer.getEmail());
+        customerShowOutDTO.setAvatarUrl(customer.getAvatarUrl());
+        customerShowOutDTO.setStatus(customer.getStatus());
+        customerShowOutDTO.setRewordPoints(customer.getRewordPoints());
+        customerShowOutDTO.setCreateTimestamp(customer.getCreateTime().getTime());
+        customerShowOutDTO.setDefaultAddressId(customer.getDefaultAddressId());
+
         return customerShowOutDTO;
     }
 
