@@ -1,5 +1,7 @@
 package com.gy.jcartstore.dto.out.returnn;
 
+import java.util.List;
+
 public class ReturnShowOutDTO {
     private Integer returnId;
     private Long orderId;
@@ -18,6 +20,16 @@ public class ReturnShowOutDTO {
     private String comment;
     private Long createTimestamp;
     private Long updateTimestamp;
+
+    private List<ReturnHistoryListOutDTO> returnHistories;
+
+    public List<ReturnHistoryListOutDTO> getReturnHistories() {
+        return returnHistories;
+    }
+
+    public void setReturnHistories(List<ReturnHistoryListOutDTO> returnHistories) {
+        this.returnHistories = returnHistories;
+    }
 
     public Integer getReturnId() {
         return returnId;

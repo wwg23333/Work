@@ -3,13 +3,29 @@ package com.gy.jcartstore.controller;
 import com.gy.jcartstore.dto.in.returnn.ReturnSearchInDTO;
 import com.gy.jcartstore.dto.in.returnn.ReturnApplyActionInDTO;
 import com.gy.jcartstore.dto.out.PageOutDTO;
+import com.gy.jcartstore.dto.out.returnn.ReturnHistoryListOutDTO;
 import com.gy.jcartstore.dto.out.returnn.ReturnListOutDTO;
 import com.gy.jcartstore.dto.out.returnn.ReturnShowOutDTO;
+import com.gy.jcartstore.po.Return;
+import com.gy.jcartstore.po.ReturnHistory;
+import com.gy.jcartstore.service.ReturnHistoryService;
+import com.gy.jcartstore.service.ReturnService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/return")
+@CrossOrigin
 public class ReturnController {
+
+    @Autowired
+    private ReturnService returnService;
+
+    @Autowired
+    private ReturnHistoryService returnHistoryService;
 
     @GetMapping("/search")
     public PageOutDTO<ReturnListOutDTO> search(ReturnSearchInDTO returnSearchInDTO,
@@ -19,7 +35,37 @@ public class ReturnController {
 
     @GetMapping("/getById")
     public ReturnShowOutDTO getById(@RequestParam Integer returnId){
-        return null;
+        Return aReturn = returnService.getById(returnId);
+
+        ReturnShowOutDTO returnShowOutDTO = new ReturnShowOutDTO();
+        returnShowOutDTO.setReturnId(aReturn.getReturnId());
+        returnShowOutDTO.setOrderId(aReturn.getOrderId());
+        returnShowOutDTO.setOrderTimestamp(aReturn.getOrderTime().getTime());
+        returnShowOutDTO.setCustomerName(aReturn.getCustomerName());
+        returnShowOutDTO.setMobile(aReturn.getMobile());
+        returnShowOutDTO.setEmail(aReturn.getEmail());
+        returnShowOutDTO.setStatus(aReturn.getStatus());
+        returnShowOutDTO.setAction(aReturn.getAction());
+        returnShowOutDTO.setProductCode(aReturn.getProductCode());
+        returnShowOutDTO.setProductName(aReturn.getProductName());
+        returnShowOutDTO.setQuantity(aReturn.getQuantity());
+        returnShowOutDTO.setReason(aReturn.getReason());
+        returnShowOutDTO.setComment(aReturn.getComment());
+        returnShowOutDTO.setOpened(aReturn.getOpened());
+        returnShowOutDTO.setCreateTimestamp(aReturn.getCreateTime().getTime());
+        returnShowOutDTO.setUpdateTimestamp(aReturn.getUpdateTime().getTime());
+
+        List<ReturnHistory> returnHistories = returnHistoryService.getByReturnId(returnId);
+        List<ReturnHistoryListOutDTO> returnHistoryListOutDTOS = returnHistories.stream().map(returnHistory -> {
+            ReturnHistoryListOutDTO returnHistoryListOutDTO = new ReturnHistoryListOutDTO();
+            returnHistoryListOutDTO.setTimestamp(returnHistory.getTime().getTime());
+            returnHistoryListOutDTO.setReturnStatus(returnHistory.getReturnStatus());
+            returnHistoryListOutDTO.setComment(returnHistory.getComment());
+            return returnHistoryListOutDTO;
+        }).collect(Collectors.toList());
+        returnShowOutDTO.setReturnHistories(returnHistoryListOutDTOS);
+
+        return returnShowOutDTO;
     }
 
     @PostMapping("/apply")
