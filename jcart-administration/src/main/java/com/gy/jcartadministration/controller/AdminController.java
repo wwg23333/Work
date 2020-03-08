@@ -76,6 +76,7 @@ public class AdminController {
     //传入重置的密码
     @GetMapping("/getPwdRestCode")
     public String getPwdRest(@RequestParam String email){
+        Administrator administrator = adminService.getByEmail(email);
         return null;
     }
     //重置新的密码
