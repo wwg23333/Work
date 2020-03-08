@@ -1,5 +1,6 @@
 package com.gy.jcartstore.controller;
 
+import com.github.pagehelper.Page;
 import com.gy.jcartstore.dto.in.returnn.ReturnSearchInDTO;
 import com.gy.jcartstore.dto.in.returnn.ReturnApplyActionInDTO;
 import com.gy.jcartstore.dto.out.PageOutDTO;
@@ -28,9 +29,27 @@ public class ReturnController {
     private ReturnHistoryService returnHistoryService;
 
     @GetMapping("/search")
-    public PageOutDTO<ReturnListOutDTO> search(ReturnSearchInDTO returnSearchInDTO,
-                                               @RequestParam Integer pageNum){
-        return null;
+    public PageOutDTO<ReturnListOutDTO> search(@RequestAttribute Integer customerId,
+                                               @RequestParam(required = false, defaultValue = "1") Integer pageNum){
+        Page<Return> page = returnService.showList(customerId, pageNum);
+        List<ReturnListOutDTO> returnListOutDTOS = page.stream().map(aReturn -> {
+            ReturnListOutDTO returnListOutDTO = new ReturnListOutDTO();
+            returnListOutDTO.setReturnId(aReturn.getReturnId());
+            returnListOutDTO.setOrderId(aReturn.getOrderId());
+            returnListOutDTO.setCustomerId(aReturn.getCustomerId());
+            returnListOutDTO.setCustomerName(aReturn.getCustomerName());
+            returnListOutDTO.setStatus(aReturn.getStatus());
+            returnListOutDTO.setCreateTimestamp(aReturn.getCreateTime().getTime());
+            return returnListOutDTO;
+        }).collect(Collectors.toList());
+
+        PageOutDTO<ReturnListOutDTO> pageOutDTO = new PageOutDTO<>();
+        pageOutDTO.setTotal(page.getTotal());
+        pageOutDTO.setPageSize(page.getPageSize());
+        pageOutDTO.setPageNum(page.getPageNum());
+        pageOutDTO.setList(returnListOutDTOS);
+
+        return pageOutDTO;
     }
 
     @GetMapping("/getById")
