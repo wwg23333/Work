@@ -1,22 +1,112 @@
 package com.gy.jcartstore.dto.in.returnn;
 
 public class ReturnApplyActionInDTO {
-    private Integer returnId;
-    private Byte action;
+    private Long orderId;
+    private Long orderTimestamp;
+    private String customerName;
+    private String mobile;
+    private String email;
+    private String productCode;
+    private String productName;
+    private Byte status;
+    private Integer quantity;
+    private Byte reason;
+    private Boolean opened;
+    private String comment;
 
-    public Integer getReturnId() {
-        return returnId;
+    public Byte getStatus() {
+        return status;
     }
 
-    public void setReturnId(Integer returnId) {
-        this.returnId = returnId;
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 
-    public Byte getAction() {
-        return action;
+    public Long getOrderTimestamp() {
+        return orderTimestamp;
     }
 
-    public void setAction(Byte action) {
-        this.action = action;
+    public void setOrderTimestamp(Long orderTimestamp) {
+        this.orderTimestamp = orderTimestamp;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Byte getReason() {
+        return reason;
+    }
+
+    public void setReason(Byte reason) {
+        this.reason = reason;
+    }
+
+    public Boolean getOpened() {
+        return opened;
+    }
+
+    public void setOpened(Boolean opened) {
+        this.opened = opened;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 }

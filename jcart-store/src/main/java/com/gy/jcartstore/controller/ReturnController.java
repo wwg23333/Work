@@ -7,6 +7,7 @@ import com.gy.jcartstore.dto.out.PageOutDTO;
 import com.gy.jcartstore.dto.out.returnn.ReturnHistoryListOutDTO;
 import com.gy.jcartstore.dto.out.returnn.ReturnListOutDTO;
 import com.gy.jcartstore.dto.out.returnn.ReturnShowOutDTO;
+import com.gy.jcartstore.enumeration.ReturnStatus;
 import com.gy.jcartstore.po.Return;
 import com.gy.jcartstore.po.ReturnHistory;
 import com.gy.jcartstore.service.ReturnHistoryService;
@@ -14,6 +15,7 @@ import com.gy.jcartstore.service.ReturnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -88,8 +90,29 @@ public class ReturnController {
     }
 
     @PostMapping("/apply")
-    public void apply(@RequestBody ReturnApplyActionInDTO returnApplyActionInDTO){
+    public Integer apply(@RequestBody ReturnApplyActionInDTO returnApplyActionInDTO,
+                      @RequestAttribute Integer customerId){
+        Return re = new Return();
+        re.setOrderId(returnApplyActionInDTO.getOrderId());
+        re.setOrderTime(new Date(returnApplyActionInDTO.getOrderTimestamp()));
+        re.setCustomerId(customerId);
+        re.setCustomerName(returnApplyActionInDTO.getCustomerName());
+        re.setMobile(returnApplyActionInDTO.getMobile());
+        re.setEmail(returnApplyActionInDTO.getEmail());
+        re.setStatus((byte) ReturnStatus.ToProcess.ordinal());
+        re.setProductCode(returnApplyActionInDTO.getProductCode());
+        re.setProductName(returnApplyActionInDTO.getProductName());
+        re.setQuantity(returnApplyActionInDTO.getQuantity());
+        re.setReason(returnApplyActionInDTO.getReason());
+        re.setOpened(returnApplyActionInDTO.getOpened());
+        re.setComment(returnApplyActionInDTO.getComment());
+        Date now = new Date();
+        re.setCreateTime(now);
+        re.setUpdateTime(now);
+        returnService.reApply(re);
+        Integer returnId = re.getReturnId();
 
+        return returnId;
     }
 
 }

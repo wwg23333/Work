@@ -1,4 +1,4 @@
-package io.cjf.jcartstoreback.enumeration;
+package com.gy.jcartstore.enumeration;
 
 public enum ReturnStatus {
     ToProcess,

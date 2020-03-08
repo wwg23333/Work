@@ -26,4 +26,11 @@ public class ReturnServiceImpl implements ReturnService {
         Page<Return> page = returnMapper.showList(customerId);
         return page;
     }
+
+    @Override
+    public Integer reApply(Return re) {
+        returnMapper.insertSelective(re);
+        Integer returnId = re.getReturnId();
+        return returnId;
+    }
 }

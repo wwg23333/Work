@@ -8,4 +8,6 @@ public interface ReturnService {
     Return getById(Integer returnId);
 
     Page<Return> showList(Integer customerId, Integer pageNum);
+
+    Integer reApply(Return re);
 }
