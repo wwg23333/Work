@@ -11,6 +11,7 @@ import com.gy.jcartadministration.service.ReturnService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -76,7 +77,11 @@ public class ReturnController {
 
     @PostMapping("/updateAction")
     public void updateAction(@RequestBody ReturnUpdateActionInDTO returnUpdateActionInDTO){
-
+        Return re = new Return();
+        re.setReturnId(returnUpdateActionInDTO.getReturnId());
+        re.setAction(returnUpdateActionInDTO.getAction());
+        re.setUpdateTime(new Date());
+        returnService.update(re);
     }
 
 }

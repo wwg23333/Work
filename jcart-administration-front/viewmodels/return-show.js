@@ -38,6 +38,24 @@ var app = new Vue({
         this.getReturnById();
     },
     methods: {
+        handleUpdateAction() {
+            console.log('update action click');
+            this.updateReturnAction();
+        },
+        updateReturnAction() {
+            axios.post('/return/updateAction', {
+                returnId: this.returnId,
+                action: this.selectedAction
+            })
+                .then(function (response) {
+                    console.log(response);
+                    alert('处理方式更新成功');
+                    app.getReturnById();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
         getReturnById() {
             axios.get('/return/getById', {
                 params: {

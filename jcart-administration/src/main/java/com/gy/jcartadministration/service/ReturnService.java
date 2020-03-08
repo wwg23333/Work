@@ -7,4 +7,6 @@ public interface ReturnService {
     Return getById(Integer returnId);
 
     Page<Return> search(Integer pageNum);
+
+    void update(Return re);
 }

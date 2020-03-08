@@ -27,4 +27,9 @@ public class ReturnServiceImpl implements ReturnService {
         return page;
     }
 
+    @Override
+    public void update(Return re) {
+        returnMapper.updateByPrimaryKeySelective(re);
+    }
+
 }
