@@ -10,6 +10,7 @@ public class ClientExceptionConstant {
     public static final String IMAGE_INVALID_ERRCODE = "0004";
     public static final String IMAGE_INVALID_ERRMSG = "image is not jpg or png";
 
+    public static final String ADMINISTRATOR_EMAIL_NOT_EXIST_ERRCODE = "0107";
     public static final String ADMINISTRATOR_USERNAME_NOT_EXIST_ERRCODE = "0101";
     public static final String ADMINISTRATOR_USERNAME_NOT_EXIST_ERRMSG = "administrator username not exist";
     public static final String ADNINISTRATOR_PASSWORD_INVALID_ERRCODE = "0102";

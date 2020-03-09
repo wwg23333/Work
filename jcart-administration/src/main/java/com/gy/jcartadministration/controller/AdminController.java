@@ -11,10 +11,17 @@ import com.gy.jcartadministration.po.Administrator;
 import com.gy.jcartadministration.service.AdminService;
 import com.gy.jcartadministration.util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.DatatypeConverter;
+import java.security.SecureRandom;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -27,6 +34,17 @@ public class AdminController {
 
     @Autowired
     private JWTUtil jwtUtil;
+
+    @Autowired
+    private SecureRandom secureRandom;
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Value("${spring.mail.username}")
+    private String fromEmail;
+
+    private Map<String, String> emailPwdResetCodeMap = new HashMap<>();
 
     //管理员登录页面
     @GetMapping("/login")
@@ -75,9 +93,20 @@ public class AdminController {
     }
     //传入重置的密码
     @GetMapping("/getPwdRestCode")
-    public String getPwdRest(@RequestParam String email){
+    public void getPwdRest(@RequestParam String email) throws Exception{
         Administrator administrator = adminService.getByEmail(email);
-        return null;
+        if (administrator == null){
+            throw new ClientException(ClientExceptionConstant.ADMINISTRATOR_EMAIL_NOT_EXIST_ERRCODE, ClientExceptionConstant.ADMINISTRATOR_EMAIL_NOT_EXIST_ERRMSG);
+        }
+        byte[] bytes = secureRandom.generateSeed(3);
+        String binary = DatatypeConverter.printHexBinary(bytes);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(fromEmail);
+        message.setTo(email);
+        message.setSubject("jcart管理端管理员密码重置");
+        message.setText(binary);
+        mailSender.send(message);
+        emailPwdResetCodeMap.put(email, binary);
     }
     //重置新的密码
     @PostMapping("/restPwd")
