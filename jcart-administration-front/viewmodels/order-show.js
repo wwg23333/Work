@@ -25,7 +25,11 @@ var app = new Vue({
             { value: 3, label: '已发货' },
             { value: 4, label: '待签收' },
             { value: 5, label: '已签收' }
-        ]},
+        ],
+        createHistoryOrderStatus: '',
+        createHistoryCustomerNotified: false,
+        createHistoryComment: ''
+    },
     mounted() {
         console.log('view mounted');
 
@@ -39,6 +43,10 @@ var app = new Vue({
         this.getOrderById();
     },
     methods: {
+        handleCreateOrderHistoryClick() {
+            console.log('create order history click');
+            this.createOrderHistory();
+        },
         getOrderById() {
             axios.get('/order/getById', {
                 params: {
@@ -68,5 +76,19 @@ var app = new Vue({
                     console.log(error);
                 });
         },
+        getHistoryByOrderId() {
+            axios.get('/orderhistory/getListByOrderId', {
+                params: {
+                    orderId: this.orderId
+                }
+            })
+                .then(function (response) {
+                    console.log(response);
+                    app.orderHistories = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
     }
 })
