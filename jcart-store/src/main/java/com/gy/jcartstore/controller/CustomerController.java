@@ -111,6 +111,11 @@ public class CustomerController {
         emailPwdResetCodeMap.put("PwdResetCode"+email, hex);
     }
 
+    @PostMapping("/resetPwd")
+    public void resetPwd(@RequestBody CustomerRestPwdInDTO restPwdInDTO) throws ClientException {
+
+    }
+
     @GetMapping("/getById")
     public CustomerShowOutDTO getBYId(@RequestParam Integer customerId){
         return null;
