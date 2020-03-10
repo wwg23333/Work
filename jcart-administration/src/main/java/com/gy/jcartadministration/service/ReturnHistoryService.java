@@ -8,4 +8,6 @@ public interface ReturnHistoryService {
 
     List<ReturnHistory> getListByReturnId(Integer returnId);
 
+    Long create(ReturnHistory returnHistory);
+
 }

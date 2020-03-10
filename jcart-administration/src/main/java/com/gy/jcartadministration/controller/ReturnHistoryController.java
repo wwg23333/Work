@@ -6,6 +6,7 @@ import com.gy.jcartadministration.service.ReturnHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +36,16 @@ public class ReturnHistoryController {
     }
 
     @PostMapping("/create")
-    public Integer create(@RequestBody ReturnHistoryCreateInDTO returnHistoryCreateInDTO){
-        return null;
+    public Long create(@RequestBody ReturnHistoryCreateInDTO returnHistoryCreateInDTO){
+        ReturnHistory returnHistory = new ReturnHistory();
+        returnHistory.setReturnId(returnHistoryCreateInDTO.getReturnId());
+        returnHistory.setTime(new Date());
+        returnHistory.setReturnStatus(returnHistoryCreateInDTO.getReturnStatus());
+        returnHistory.setComment(returnHistoryCreateInDTO.getComment());
+        Boolean customerNotified = returnHistoryCreateInDTO.getCustomerNotifeid();
+        returnHistory.setCustomerNotified(customerNotified);
+        Long returnHistoryId = returnHistoryService.create(returnHistory);
+
+        return returnHistoryId;
     }
 }
