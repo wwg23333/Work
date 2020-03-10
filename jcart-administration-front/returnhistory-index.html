@@ -11,6 +11,20 @@
 
 <body>
     <div id="app">
+        <el-divider>退货历史信息</el-divider>
+        <el-table :data="returnHistories" style="width: 100%">
+            <el-table-column prop="timestamp" label="时间">
+            </el-table-column>
+            <el-table-column prop="returnStatus" label="退货状态">
+            </el-table-column>
+            <el-table-column prop="comment" label="备注">
+            </el-table-column>
+            <el-table-column label="是否通知客户">
+                <template slot-scope="scope">
+                    {{scope.row.customerNotified}}
+                </template>
+            </el-table-column>
+        </el-table>
     </div>
 
     <script src="assets/js/axios.min.js"></script>
