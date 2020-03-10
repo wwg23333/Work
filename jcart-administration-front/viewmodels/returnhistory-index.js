@@ -25,6 +25,10 @@ var app = new Vue({
         this.getHistoryByReturnId();
     },
     methods: {
+        handleCreateClick() {
+            console.log('create click');
+            this.createReturnHistory();
+        },
         getHistoryByReturnId() {
             axios.get('/returnhistory/getListByReturnId', {
                 params: {
@@ -34,6 +38,25 @@ var app = new Vue({
                 .then(function (response) {
                     console.log(response);
                     app.returnHistories = response.data;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        createReturnHistory() {
+            axios.post('/returnhistory/create', {
+                returnId: this.returnId,
+                returnStatus: this.selectedReturnStatus,
+                customerNotified: this.customerNotified,
+                comment: this.comment,
+            })
+                .then(function (response) {
+                    console.log(response);
+                    alert('创建成功');
+                    app.selectedReturnStatus = '';
+                    app.customerNotified = false;
+                    app.comment = '';
+                    app.getHistoryByReturnId();
                 })
                 .catch(function (error) {
                     console.log(error);
