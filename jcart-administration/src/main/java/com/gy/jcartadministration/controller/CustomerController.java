@@ -2,6 +2,7 @@ package com.gy.jcartadministration.controller;
 
 import com.github.pagehelper.Page;
 import com.gy.jcartadministration.dto.in.customer.CustomerSearchInDTO;
+import com.gy.jcartadministration.dto.in.customer.CustomerSetStatusInDTO;
 import com.gy.jcartadministration.dto.out.PageOutDTO;
 import com.gy.jcartadministration.dto.out.customer.CustomerListOutDTO;
 import com.gy.jcartadministration.dto.out.customer.CustomerShowOutDTO;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/customer")
+@CrossOrigin
 public class CustomerController {
 
     @Autowired
@@ -50,6 +52,11 @@ public class CustomerController {
     @PostMapping("/disable")
     public void disable(@RequestParam Integer customerId){
         customerService.disable(customerId);
+    }
+
+    @PostMapping("/setStatus")
+    public void setStatus(@RequestBody CustomerSetStatusInDTO customerSetStatusInDTO){
+
     }
 
 
