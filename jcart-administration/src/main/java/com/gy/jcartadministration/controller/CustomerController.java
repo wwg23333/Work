@@ -56,7 +56,7 @@ public class CustomerController {
 
     @PostMapping("/setStatus")
     public void setStatus(@RequestBody CustomerSetStatusInDTO customerSetStatusInDTO){
-
+        customerService.setStatus(customerSetStatusInDTO);
     }
 
 
