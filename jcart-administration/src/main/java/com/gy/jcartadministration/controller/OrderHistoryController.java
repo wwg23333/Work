@@ -7,6 +7,7 @@ import com.gy.jcartadministration.service.OrderHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,8 +37,16 @@ public class OrderHistoryController {
     }
 
     @PostMapping("/create")
-    public Integer create(@RequestBody OrderHistoryCreateInDTO orderHistoryCreateInDTO){
-        return null;
+    public Long create(@RequestBody OrderHistoryCreateInDTO orderHistoryCreateInDTO){
+        OrderHistory orderHistory = new OrderHistory();
+        orderHistory.setOrderId(orderHistoryCreateInDTO.getOrderId());
+        orderHistory.setTime(new Date());
+        orderHistory.setOrderStatus(orderHistoryCreateInDTO.getOrderStatus());
+        orderHistory.setComment(orderHistoryCreateInDTO.getComment());
+        orderHistory.setCustomerNotified(orderHistoryCreateInDTO.getCustomerNotified());
+
+        Long orderHistoryId = orderHistoryService.create(orderHistory);
+        return orderHistoryId;
     }
 
 }

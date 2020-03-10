@@ -89,6 +89,26 @@ var app = new Vue({
                 .catch(function (error) {
                     console.log(error);
                 });
+        },
+        createOrderHistory() {
+            axios.post('/orderhistory/create', {
+                orderId: this.orderId,
+                orderStatus: this.createHistoryOrderStatus,
+                comment: this.createHistoryComment,
+                customerNotified: this.createHistoryCustomerNotified
+            })
+                .then(function (response) {
+                    console.log(response);
+                    alert('订单历史添加成功');
+                    app.createHistoryOrderStatus = '';
+                    app.createHistoryCustomerNotified = false;
+                    app.createHistoryComment = '';
+                    app.getOrderById();
+                    app.getHistoryByOrderId();
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
         }
     }
 })
