@@ -20,6 +20,8 @@ public class OrderShowOutDTO {
     private String comment;
     private List<OrderProductVO> orderProducts;
 
+    private List<OrderHistoryListOutDTO> orderHistories;
+
     public Long getOrderId() {
         return orderId;
     }
@@ -130,5 +132,13 @@ public class OrderShowOutDTO {
 
     public void setOrderProducts(List<OrderProductVO> orderProducts) {
         this.orderProducts = orderProducts;
+    }
+
+    public List<OrderHistoryListOutDTO> getOrderHistories() {
+        return orderHistories;
+    }
+
+    public void setOrderHistories(List<OrderHistoryListOutDTO> orderHistories) {
+        this.orderHistories = orderHistories;
     }
 }
