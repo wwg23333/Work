@@ -1,6 +1,8 @@
 package com.gy.jcartstore.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.gy.jcartstore.dao.OrderDetailMapper;
 import com.gy.jcartstore.dao.OrderMapper;
 import com.gy.jcartstore.dto.in.OrderCheckoutInDTO;
@@ -95,5 +97,12 @@ public class OrderServiceImpl implements OrderService {
         orderDetailMapper.insertSelective(orderDetail);
 
         return orderId;
+    }
+
+    @Override
+    public Page<Order> getByCustomerId(Integer pageNum, Integer customerId) {
+        PageHelper.startPage(pageNum, 10);
+        Page<Order> page = orderMapper.selectByCustomerId(customerId);
+        return page;
     }
 }
