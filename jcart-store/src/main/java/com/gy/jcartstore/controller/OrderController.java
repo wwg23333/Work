@@ -1,6 +1,8 @@
 package com.gy.jcartstore.controller;
 
 import com.gy.jcartstore.dto.in.OrderCheckoutInDTO;
+import com.gy.jcartstore.dto.out.OrderListOutDTO;
+import com.gy.jcartstore.dto.out.PageOutDTO;
 import com.gy.jcartstore.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,12 @@ public class OrderController {
                          @RequestAttribute Integer customerId) {
         Long orderId = orderService.checkout(orderCheckoutInDTO, customerId);
         return orderId;
+    }
+
+    @GetMapping("/getList")
+    public PageOutDTO<OrderListOutDTO> getList(@RequestParam Integer pageNum,
+                                               @RequestAttribute Integer customerId) {
+        return null;
     }
 
 }
