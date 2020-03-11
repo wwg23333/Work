@@ -3,6 +3,7 @@ package com.gy.jcartstore.controller;
 import com.github.pagehelper.Page;
 import com.gy.jcartstore.dto.in.OrderCheckoutInDTO;
 import com.gy.jcartstore.dto.out.OrderListOutDTO;
+import com.gy.jcartstore.dto.out.OrderShowOutDTO;
 import com.gy.jcartstore.dto.out.PageOutDTO;
 import com.gy.jcartstore.po.Order;
 import com.gy.jcartstore.service.OrderService;
@@ -48,6 +49,12 @@ public class OrderController {
         pageOutDTO.setList(orderListOutDTOS);
 
         return pageOutDTO;
+    }
+
+    @GetMapping("/getById")
+    public OrderShowOutDTO getById(@RequestParam Long orderId) {
+        OrderShowOutDTO orderShowOutDTO = orderService.getById(orderId);
+        return orderShowOutDTO;
     }
 
 }
