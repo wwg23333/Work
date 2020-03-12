@@ -46,6 +46,22 @@
         寄送费用：{{shipPrice}}<br>
         师傅费用：{{totalPrice + shipPrice}} <br>
         <br>
+
+        订单历史
+        <el-table :data="orderHistories" style="width: 100%">
+            <el-table-column label="时间">
+                <template slot-scope="scope">
+                    {{(new Date(scope.row.timestamp)).toLocaleString()}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="orderStatus" label="订单状态">
+                <template slot-scope="scope">
+                    {{statuses[scope.row.orderStatus].label}}
+                </template>
+            </el-table-column>
+            <el-table-column prop="comment" label="备注">
+            </el-table-column>
+        </el-table>
         <br>
     </div>
 

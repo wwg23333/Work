@@ -15,6 +15,7 @@ var app = new Vue({
         invoicePrice: '',
         comment: '',
         orderProducts: [],
+        orderHistories: [],
         statuses: [
             { value: 0, label: '待处理' },
             { value: 1, label: '处理中' },
@@ -72,6 +73,7 @@ var app = new Vue({
                     app.invoicePrice = orderDTO.invoicePrice;
                     app.comment = orderDTO.comment;
                     app.orderProducts = orderDTO.orderProducts;
+                    app.orderHistories = orderDTO.orderHistories;
                 })
                 .catch(function (error) {
                     console.log(error);

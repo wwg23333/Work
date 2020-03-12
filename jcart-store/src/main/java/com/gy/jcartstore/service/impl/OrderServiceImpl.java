@@ -7,13 +7,12 @@ import com.gy.jcartstore.dao.OrderDetailMapper;
 import com.gy.jcartstore.dao.OrderMapper;
 import com.gy.jcartstore.dto.in.OrderCheckoutInDTO;
 import com.gy.jcartstore.dto.in.OrderProductInDTO;
+import com.gy.jcartstore.dto.out.OrderHistoryListOutDTO;
 import com.gy.jcartstore.dto.out.OrderShowOutDTO;
 import com.gy.jcartstore.enumeration.OrderStatus;
-import com.gy.jcartstore.po.Address;
-import com.gy.jcartstore.po.Order;
-import com.gy.jcartstore.po.OrderDetail;
-import com.gy.jcartstore.po.Product;
+import com.gy.jcartstore.po.*;
 import com.gy.jcartstore.service.AddressService;
+import com.gy.jcartstore.service.OrderHistoryService;
 import com.gy.jcartstore.service.OrderService;
 import com.gy.jcartstore.service.ProductService;
 import com.gy.jcartstore.vo.OrderProductVO;
@@ -39,6 +38,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderDetailMapper orderDetailMapper;
+
+    @Autowired
+    private OrderHistoryService orderHistoryService;
 
     @Override
     @Transactional
@@ -130,6 +132,17 @@ public class OrderServiceImpl implements OrderService {
 
         List<OrderProductVO> orderProductVOS = JSON.parseArray(orderDetail.getOrderProducts(), OrderProductVO.class);
         orderShowOutDTO.setOrderProducts(orderProductVOS);
+
+        List<OrderHistory> orderHistories = orderHistoryService.getByOrderId(orderId);
+        List<OrderHistoryListOutDTO> orderHistoryListOutDTOS = orderHistories.stream().map(orderHistory -> {
+            OrderHistoryListOutDTO orderHistoryListOutDTO = new OrderHistoryListOutDTO();
+            orderHistoryListOutDTO.setTimestamp(orderHistory.getTime().getTime());
+            orderHistoryListOutDTO.setOrderStatus(orderHistory.getOrderStatus());
+            orderHistoryListOutDTO.setComment(orderHistory.getComment());
+            return orderHistoryListOutDTO;
+        }).collect(Collectors.toList());
+
+        orderShowOutDTO.setOrderHistories(orderHistoryListOutDTOS);
 
         return orderShowOutDTO;
     }
