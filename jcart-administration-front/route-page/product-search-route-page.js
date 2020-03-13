@@ -3,7 +3,17 @@ const ProductSearchRoutePage = {
     data() {
         return {
             pageInfo: '',
-            pageNum: 1
+            pageNum: 1,
+            productCode: '',
+            productName: '',
+            price: '',
+            stockQuantity: '',
+            selectedStatus: '',
+            status: [
+                { value: 0, label: '下架' },
+                { value: 1, label: '上架' },
+                { value: 2, label: '待审核' }
+            ]
         }
     },
     mounted() {
@@ -11,6 +21,19 @@ const ProductSearchRoutePage = {
         this.searchProduct();
     },
     methods: {
+        handleSearchClick() {
+            console.log('search click');
+            this.pageNum = 1;
+            this.searchProduct();
+        },
+        handleClearClick() {
+            console.log('clear click');
+            this.productCode = '';
+            this.productName = '';
+            this.price = '';
+            this.stockQuantity = '';
+            this.selectedStatus = '';
+        },
         handlePageChange(val) {
             console.log('page change');
             this.pageNum = val;
@@ -19,12 +42,17 @@ const ProductSearchRoutePage = {
         searchProduct() {
             axios.get('/product/search', {
                 params: {
+                    productCode: this.productCode,
+                    productName: this.productName,
+                    price: this.price,
+                    stockQuantity: this.stockQuantity,
+                    status: this.selectedStatus,
                     pageNum: this.pageNum
                 }
             })
-                .then(function (response) {
+                .then((response) => {
                     console.log(response);
-                    app.pageInfo = response.data;
+                    this.pageInfo = response.data;
                 })
                 .catch(function (error) {
                     console.log(error);
