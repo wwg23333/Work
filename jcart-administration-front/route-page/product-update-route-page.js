@@ -34,16 +34,75 @@ const ProductUpdateRoutePage = {
             alert('productId is null');
             return;
         }
+
+        this.getProductById();
     },
     methods: {
-        handleGoBack() {
-            console.log('go back click');
-            this.$router.back();
-        },
         handleUpdateClick() {
             console.log('update click');
             this.description = tinyMCE.activeEditor.getContent();
             this.updateProduct();
+        },
+        handleOnMainChange(val) {
+            this.selectedMainPic = val.raw;
+        },
+        handleUploadMainClick() {
+            console.log('upload main pic click');
+            this.uploadMainImage();
+        },
+        uploadMainImage() {
+            var formData = new FormData();
+            formData.append("image", this.selectedMainPic);
+
+            axios.post('/image/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then((response) => {
+                    console.log(response);
+                    this.mainPicUrl = response.data;
+                    alert('上传成功');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert('上传失败');
+                });
+        },
+        handleOnOtherChange(file, fileList) {
+            console.log('fileList', fileList);
+            this.selectedOtherPics = fileList;
+        },
+        handleOnOtherRemove(file, fileList) {
+            console.log('fileList', fileList);
+            this.selectedOtherPics = fileList;
+        },
+        handleUploadOtherClick() {
+            console.log('upload other pic click');
+            this.uploadOtherImage();
+        },
+        uploadOtherImage() {
+            this.selectedOtherPics.forEach(pic => {
+                var formData = new FormData();
+                formData.append("image", pic.raw);
+
+                axios.post('/image/upload', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                    .then((response) => {
+                        console.log(response);
+                        var url = response.data;
+                        this.otherPicUrls.push(url);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        alert('上传失败');
+                    });
+            });
+
+
         },
         updateProduct() {
             axios.post('/product/update', {
@@ -63,6 +122,36 @@ const ProductUpdateRoutePage = {
                 .then((response) => {
                     console.log(response);
                     alert('修改成功');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        getProductById() {
+            axios.get('/product/getById', {
+                params: {
+                    productId: this.productId
+                }
+            })
+                .then((response) => {
+                    console.log(response);
+                    var product = response.data;
+                    this.productId = product.productId;
+                    this.productCode = product.productCode;
+                    this.productName = product.productName;
+                    this.price = product.price;
+                    this.discount = product.discount;
+                    this.stockQuantity = product.stockQuantity;
+                    this.selectedStatus = product.status;
+                    this.rewordPoints = product.rewordPoints;
+                    this.sortOrder = product.sortOrder;
+                    this.mainPicUrl = product.mainPicUrl;
+                    this.productAbstract = product.productAbstract;
+                    this.description = product.description;
+                    tinymce.init({
+                        selector: '#mytextarea'
+                    });
+                    this.otherPicUrls = product.otherPicUrls;
                 })
                 .catch(function (error) {
                     console.log(error);
