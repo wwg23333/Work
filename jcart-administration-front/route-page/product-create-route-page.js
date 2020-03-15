@@ -2,26 +2,28 @@ const ProductCreateRoutePage = {
     template: ``,
     data() {
         return {
-        productCode: '',
-        productName: '',
-        price: '',
-        discount: '',
-        stockQuantity: '',
-        rewordPoints: '',
-        sortOrder: '',
-        description: '',
-        selectedStatus: 1,
-        selectedMainPic: '',
-        mainPicUrl: '',
-        selectedOtherPics: [],
-        otherPicUrls: [],
-        statuses: [
-            { value: 0, label: '下架' },
-            { value: 1, label: '上架' },
-            { value: 2, label: '待审核' }
-        ],
-        mainFileList: [],
-        otherFileList: []
+            activeTab: 'generalTab',
+            productCode: '',
+            productName: '',
+            price: '',
+            discount: '',
+            stockQuantity: '',
+            rewordPoints: '',
+            sortOrder: '',
+            productAbstract: '',
+            description: '',
+            selectedStatus: 1,
+            selectedMainPic: '',
+            mainPicUrl: '',
+            selectedOtherPics: [],
+            otherPicUrls: [],
+            statuses: [
+                { value: 0, label: '下架' },
+                { value: 1, label: '上架' },
+                { value: 2, label: '待审核' }
+            ],
+            mainFileList: [],
+            otherFileList: []
         }
     },
     mounted() {
@@ -42,6 +44,67 @@ const ProductCreateRoutePage = {
             console.log('create click');
             this.description = tinyMCE.activeEditor.getContent();
             this.createProduct();
+        },
+        handleOnMainChange(val) {
+            this.selectedMainPic = val.raw;
+        },
+        handleUploadMainClick() {
+            console.log('upload main pic click');
+            this.uploadMainImage();
+        },
+        uploadMainImage() {
+            var formData = new FormData();
+            formData.append("image", this.selectedMainPic);
+
+            axios.post('/image/upload', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then((response) => {
+                    console.log(response);
+                    this.mainPicUrl = response.data;
+                    alert('上传成功');
+                })
+                .catch(function (error) {
+                    console.log(error);
+                    alert('上传失败');
+                });
+        },
+        handleOnOtherChange(file, fileList) {
+            console.log('fileList', fileList);
+            this.selectedOtherPics = fileList;
+        },
+        handleOnOtherRemove(file, fileList) {
+            console.log('fileList', fileList);
+            this.selectedOtherPics = fileList;
+        },
+        handleUploadOtherClick() {
+            console.log('upload other pic click');
+            this.uploadOtherImage();
+        },
+        uploadOtherImage() {
+            this.selectedOtherPics.forEach(pic => {
+                var formData = new FormData();
+                formData.append("image", pic.raw);
+
+                axios.post('/image/upload', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                    .then((response) => {
+                        console.log(response);
+                        var url = response.data;
+                        this.otherPicUrls.push(url);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        alert('上传失败');
+                    });
+            });
+
+
         },
         createProduct() {
             axios.post('/product/create', {
